@@ -17,10 +17,6 @@ assert len(prompt_template.messages) == 1
 system_message = prompt_template.format(dialect="SQLite", top_k=5)
 assert len(query_prompt_template.messages) == 1
 
-toolkit = SQLDatabaseToolkit(db=db, llm=llm)
-tools = toolkit.get_tools()
-
-agent_executor = create_react_agent(llm, tools, prompt=system_message)
 
 st.write("Hello World")
 
@@ -34,6 +30,11 @@ class State(TypedDict):
   query: str
   result: str
   answer: str
+
+toolkit = SQLDatabaseToolkit(db=db, llm=llm)
+tools = toolkit.get_tools()
+
+agent_executor = create_react_agent(llm, tools, prompt=system_message)
 
 st.write("after create database")
 
