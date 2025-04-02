@@ -47,6 +47,7 @@ for step in agent_executor.stream(
      stream_mode="values",
 ):
      step["messages"][-1].pretty_print()
+     st.write(step["messages"][-1].pretty_print())
 
 # df = pd.read_sql('SELECT * FROM Artist LIMIT 10', db)
 # st.write(df.to_string())
