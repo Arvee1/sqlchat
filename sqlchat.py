@@ -3,3 +3,5 @@ import sqlite3 as sql
 
 st.write("Hello World")
 
+connection = sqlite3.connect('Chinook.db')
+
