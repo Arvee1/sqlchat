@@ -22,7 +22,7 @@ st.write("Hello World")
 
 # db = sql.connect('Chinook.db')
 db = SQLDatabase.from_uri("sqlite:///Chinook.db")
-db.read('Chinook_Sqlite.sql')
+db.run('Chinook_Sqlite.sql')
 #cursor = db.cursor() #cursor object
 # with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
      # cursor.executescript(f.read())
