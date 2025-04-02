@@ -17,5 +17,5 @@ with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, bu
 
 st.write("after create database")
 
-df = pd.read_sql('SELECT * FROM Artist LIMIT 10', connection)
+df = pd.read_sql('SELECT * FROM Artist LIMIT 10', db)
 st.write(df.to_string())
