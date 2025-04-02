@@ -20,14 +20,14 @@ assert len(query_prompt_template.messages) == 1
 
 st.write("Hello World")
 
-db = sql.connect('Chinook.db')
-
+# db = sql.connect('Chinook.db')
+db = SQLDatabase.from_uri("Chinook.db")
 cursor = db.cursor() #cursor object
 with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
      cursor.executescript(f.read())
 
 # db1 = SQLDatabase.from_uri("sqlite:///Chinook.db")
-db1 = SQLDatabase.from_uri("Chinook.db")
+# db1 = SQLDatabase.from_uri("Chinook.db")
 
 class State(TypedDict):
   question: str
@@ -35,7 +35,7 @@ class State(TypedDict):
   result: str
   answer: str
 
-toolkit = SQLDatabaseToolkit(db=db1, llm=llm)
+toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 tools = toolkit.get_tools()
 
 agent_executor = create_react_agent(llm, tools, prompt=system_message)
