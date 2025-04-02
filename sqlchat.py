@@ -4,7 +4,7 @@ import pandas as pd
 
 st.write("Hello World")
 
-connection = sqlite3.connect('Chinook.db')
+connection = sql.connect('Chinook.db')
 cursor = connection.cursor() #cursor object
 with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
      cursor.executescript(f.read())
