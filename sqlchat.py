@@ -10,8 +10,8 @@ from langgraph.prebuilt import create_react_agent
 
 st.write("Hello World")
 
-connection = sql.connect('Chinook.db')
-cursor = connection.cursor() #cursor object
+db = sql.connect('Chinook.db')
+cursor = db.cursor() #cursor object
 with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
      cursor.executescript(f.read())
 
