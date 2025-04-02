@@ -12,4 +12,4 @@ with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, bu
 st.write("after create database")
 
 df = pd.read_sql('SELECT * FROM table LIMIT 10', connection)
-st.write(df)
+st.write(df.to_string())
