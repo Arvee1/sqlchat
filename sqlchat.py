@@ -18,14 +18,14 @@ system_message = prompt_template.format(dialect="SQLite", top_k=5)
 assert len(query_prompt_template.messages) == 1
 
 
-st.write("Hello World")
+st.write("Create Database")
 
-# db = sql.connect('Chinook.db')
-db = SQLDatabase.from_uri("sqlite:///Chinook.db")
-db.run('Chinook_Sqlite.sql')
-#cursor = db.cursor() #cursor object
-# with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
-     # cursor.executescript(f.read())
+db = sql.connect('Chinook.db')
+cursor = db.cursor() #cursor object
+with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
+     cursor.executescript(f.read())
+
+st.write(db.run("SELECT * FROM Artist LIMIT 10;"))
 
 # db1 = SQLDatabase.from_uri("sqlite:///Chinook.db")
 # db1 = SQLDatabase.from_uri("Chinook.db")
