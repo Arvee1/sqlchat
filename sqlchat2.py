@@ -108,7 +108,7 @@ memory = MemorySaver()
 # Now that we're using persistence, we need to specify a thread ID
 # so that we can continue the run after review.
 config = {"configurable": {"thread_id": "1"}}
-display(Image(graph.get_graph().draw_mermaid_png()))
+# display(Image(graph.get_graph().draw_mermaid_png()))
 
 for step in graph.stream(
     {"question": "How many employees are there?"},
