@@ -7,6 +7,11 @@ from langchain_community.utilities import SQLDatabase
 from typing_extensions import TypedDict
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from langgraph.prebuilt import create_react_agent
+from typing_extensions import Annotated
+from langchain_community.tools.sql_database.tool import QuerySQLDatabaseTool
+from langgraph.graph import START, StateGraph
+from langgraph.checkpoint.memory import MemorySaver
+from IPython.display import Image, display
 
 # Set API keys from session state
 openai_api_key = st.secrets["api_key"]
@@ -110,16 +115,8 @@ for step in graph.stream(
     config,
     stream_mode="updates",
 ):
-    print(step)
+    st.write(step)
 
-try:
-    user_approval = input("Do you want to go to execute query? (yes/no): ")
-except Exception:
-    user_approval = "no"
-
-if user_approval.lower() == "yes":
-    # If approved, continue the graph execution
-    for step in graph.stream(None, config, stream_mode="updates"):
-        print(step)
-else:
-    print("Operation cancelled by user.")
+# If approved, continue the graph execution
+for step in graph.stream(None, config, stream_mode="updates"):
+     st.write(step)
