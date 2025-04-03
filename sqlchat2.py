@@ -11,7 +11,7 @@ from typing_extensions import Annotated
 from langchain_community.tools.sql_database.tool import QuerySQLDatabaseTool
 from langgraph.graph import START, StateGraph
 from langgraph.checkpoint.memory import MemorySaver
-# from IPython.display import Image, display
+from IPython.display import Image, display
 
 # Set API keys from session state
 openai_api_key = st.secrets["api_key"]
