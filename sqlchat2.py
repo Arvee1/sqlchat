@@ -22,20 +22,16 @@ assert len(prompt_template.messages) == 1
 system_message = prompt_template.format(dialect="SQLite", top_k=5)
 assert len(query_prompt_template.messages) == 1
 
-@st.cache_resource
-def create_vector():
-     st.write("Create Database")
-     db = sql.connect('Chinook.db')
-     cursor = db.cursor() #cursor object
-     with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
-          cursor.executescript(f.read())
-     
-     st.write(cursor.execute("SELECT * FROM Artist LIMIT 10;"))
-     
-     db = SQLDatabase.from_uri("sqlite:///Chinook.db")
-     db.run("SELECT * FROM Artist LIMIT 10;")
+st.write("Create Database")
+db = sql.connect('Chinook.db')
+cursor = db.cursor() #cursor object
+with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
+     cursor.executescript(f.read())
 
-create_vector()
+st.write(cursor.execute("SELECT * FROM Artist LIMIT 10;"))
+
+db = SQLDatabase.from_uri("sqlite:///Chinook.db")
+db.run("SELECT * FROM Artist LIMIT 10;")
 
 class State(TypedDict):
   question: str
