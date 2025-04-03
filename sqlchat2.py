@@ -112,13 +112,16 @@ graph = graph_builder.compile(checkpointer=memory, interrupt_before=["execute_qu
 config = {"configurable": {"thread_id": "1"}}
 # display(Image(graph.get_graph().draw_mermaid_png()))
 
-for step in graph.stream(
-    {"question": "Which artist made the most money?"},
-    config,
-    stream_mode="updates",
-):
-    st.write(step)
+prompt = st.text_area("Please enter what you want to know about music artists.")
 
-# If approved, continue the graph execution
-for step in graph.stream(None, config, stream_mode="updates"):
-     st.write(step)
+if st.button("Submit to AI", type="primary"):
+     for step in graph.stream(
+         {"question": prompt},
+         config,
+         stream_mode="updates",
+     ):
+         st.write(step)
+     
+     # If approved, continue the graph execution
+     for step in graph.stream(None, config, stream_mode="updates"):
+          st.write(step)
