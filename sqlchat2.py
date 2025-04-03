@@ -113,7 +113,7 @@ config = {"configurable": {"thread_id": "1"}}
 # display(Image(graph.get_graph().draw_mermaid_png()))
 
 for step in graph.stream(
-    {"question": "How many employees are there?"},
+    {"question": "Which artist made the most money?"},
     config,
     stream_mode="updates",
 ):
