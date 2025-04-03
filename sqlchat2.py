@@ -22,7 +22,9 @@ assert len(prompt_template.messages) == 1
 system_message = prompt_template.format(dialect="SQLite", top_k=5)
 assert len(query_prompt_template.messages) == 1
 
-st.write("Create Database")
+# The UI Part
+st.title("👨‍💻 Wazzup!!!! What do you want to know about about music artists in the Chinook Database?")
+st.write("The Chinook database represents a digital media store, including tables for artists, albums, media tracks, invoices and customers.")
 db = sql.connect('Chinook.db')
 cursor = db.cursor() #cursor object
 with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
