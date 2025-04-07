@@ -14,6 +14,25 @@ from langgraph.checkpoint.memory import MemorySaver
 from IPython.display import Image, display 
 from langchain_core.messages import HumanMessage
 
+# Inject CSS to hide the top right icon bar
+hide_github_icon = """
+            <style>
+            /* Hide the GitHub icon */
+            .viewerBadge_link__1S137 {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_github_icon, unsafe_allow_html=True)
+
+# Add a custom fork link
+st.markdown(
+    """
+    <div style='text-align: right'>
+        <a href="https://github.com/your-repo" target="_blank">Fork this app on GitHub</a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 # Set API keys from session state
 openai_api_key = st.secrets["api_key"]
 llm = init_chat_model("gpt-4o-mini", model_provider="openai", openai_api_key=openai_api_key)
