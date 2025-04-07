@@ -23,16 +23,6 @@ hide_github_icon = """
             """
 st.markdown(hide_github_icon, unsafe_allow_html=True)
 
-# Add a custom fork link
-st.markdown(
-    """
-    <div style='text-align: right'>
-        <a href="https://github.com/your-repo" target="_blank">Fork this app on GitHub</a>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
 # Set API keys from session state
 openai_api_key = st.secrets["api_key"]
 llm = init_chat_model("gpt-4o-mini", model_provider="openai", openai_api_key=openai_api_key)
