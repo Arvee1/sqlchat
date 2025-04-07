@@ -68,4 +68,4 @@ if st.button("Submit to AI", type="primary"):
         {"messages": [{"role": "user", "content": prompt}]},
         stream_mode="values",
     ):
-        step["messages"][-1].pretty_print()
+        st.write(step["messages"][-1].pretty_print())
