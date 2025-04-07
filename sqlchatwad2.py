@@ -14,10 +14,11 @@ from langgraph.checkpoint.memory import MemorySaver
 from IPython.display import Image, display 
 from langchain_core.messages import HumanMessage
 
-# Inject CSS to hide the Streamlit footer
+# Inject CSS to hide the Streamlit footer and icon bar
 hide_st_style = """
             <style>
             footer {visibility: hidden;}
+            .css-1b3sss0 e1fqkh3o3 {visibility: hidden;} /* Hide the top right icon bar */
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
