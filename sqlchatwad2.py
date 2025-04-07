@@ -64,8 +64,13 @@ prompt = st.text_area("Please enter what you want to know about info in the WAD.
 
 if st.button("Submit to AI", type="primary"):
     # user_input = input("User: ")
+    # Stream the response and display each step
+    result_container = st.empty()  # Create a placeholder for the result
+  
     for step in agent_executor.stream(
         {"messages": [{"role": "user", "content": prompt}]},
         stream_mode="values",
     ):
-        step["messages"][-1].pretty_print()
+        # step["messages"][-1].pretty_print()
+        # Display each step's result on the app
+        result_container.write(step["messages"][-1].get('content', ''))
