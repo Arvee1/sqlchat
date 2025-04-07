@@ -14,14 +14,14 @@ from langgraph.checkpoint.memory import MemorySaver
 from IPython.display import Image, display 
 from langchain_core.messages import HumanMessage
 
-# CSS to hide the top right icons
-hide_default_icons = """
+# CSS to hide the top-right button
+hide_icons = """
     <style>
-    [data-testid="stDecoration"] {display: none;}
-    footer {visibility: hidden;}
+    .css-1lsmgbg {visibility: hidden;}  /* Adjust this if necessary */
+    .viewerBadge_link__1S137 {visibility: hidden;}
     </style>
     """
-st.markdown(hide_default_icons, unsafe_allow_html=True)
+st.markdown(hide_icons, unsafe_allow_html=True)
 
 # Set API keys from session state
 openai_api_key = st.secrets["api_key"]
