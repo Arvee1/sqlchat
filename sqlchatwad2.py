@@ -21,10 +21,10 @@ llm = init_chat_model("gpt-4o-mini", model_provider="openai", openai_api_key=ope
 # so that we can continue the run after review.
 config = {"configurable": {"thread_id": "1"}}
 
-db = sql.connect('wad2024.db')
-cursor = db.cursor() #cursor object
-with open('wad2024.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
-     cursor.executescript(f.read())
+#db = sql.connect('wad2024.db')
+#cursor = db.cursor() #cursor object
+#with open('wad2024.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
+#     cursor.executescript(f.read())
 
 # st.write(cursor.execute("SELECT * FROM General LIMIT 10;"))
 
