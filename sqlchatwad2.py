@@ -1,15 +1,18 @@
+import streamlit as st 
+import sqlite3 as sql
+import pandas as pd
 from langchain import hub
 from langchain.chat_models import init_chat_model
-from typing_extensions import Annotated
 from langchain_community.utilities import SQLDatabase
 from typing_extensions import TypedDict
+from langchain_community.agent_toolkits import SQLDatabaseToolkit
+from langgraph.prebuilt import create_react_agent
+from typing_extensions import Annotated
 from langchain_community.tools.sql_database.tool import QuerySQLDatabaseTool
 from langgraph.graph import START, StateGraph
 from langgraph.checkpoint.memory import MemorySaver
-from IPython.display import Image, display
-from langchain_community.agent_toolkits import SQLDatabaseToolkit
+from IPython.display import Image, display 
 from langchain_core.messages import HumanMessage
-from langgraph.prebuilt import create_react_agent
 
 # Set API keys from session state
 openai_api_key = st.secrets["api_key"]
@@ -18,7 +21,16 @@ llm = init_chat_model("gpt-4o-mini", model_provider="openai", openai_api_key=ope
 # so that we can continue the run after review.
 config = {"configurable": {"thread_id": "1"}}
 
-db = SQLDatabase.from_uri("sqlite:///Chinook.db")
+db = sql.connect('wad2024.db')
+cursor = db.cursor() #cursor object
+with open('wad2024.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
+     cursor.executescript(f.read())
+
+st.write(cursor.execute("SELECT * FROM General LIMIT 10;"))
+
+db = SQLDatabase.from_uri("sqlite:///wad2024.db")
+db.run("SELECT * FROM General LIMIT 10;")
+
 # print(db.dialect)
 # print(db.get_usable_table_names())
 # db.run("SELECT * FROM Artist LIMIT 10;")
