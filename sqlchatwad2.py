@@ -45,6 +45,10 @@ agent_executor = create_react_agent(llm, tools, prompt=system_message)
 
 st.title("👨‍💻 Wazzup!!!! What do you want to know about Australian Workplace Agreements?")
 st.write("The Workplace Agreements Database represents all workplace agreements in Australia. The data in this instance is from the 2024 Full WAD Dataset.")
+
+# Display a special note at the beginning of your app
+st.warning("This app is experimental and data should not be treated as correct.")
+
 prompt = st.text_area("Please enter what you want to know about info in the WAD.")
 
 if st.button("Submit to AI", type="primary"):
