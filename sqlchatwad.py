@@ -23,17 +23,17 @@ system_message = prompt_template.format(dialect="SQLite", top_k=5)
 assert len(query_prompt_template.messages) == 1
 
 # The UI Part
-st.title("👨‍💻 Wazzup!!!! What do you want to know about about music artists in the Chinook Database?")
-st.write("The Chinook database represents a digital media store, including tables for artists, albums, media tracks, invoices and customers.")
-db = sql.connect('Chinook.db')
+st.title("👨‍💻 Wazzup!!!! What do you want to know about info in the WAD?")
+st.write("The Workplace Agreements Database represents all Workplace Agreements in Australia.")
+db = sql.connect('wad2024.db')
 cursor = db.cursor() #cursor object
-with open('Chinook_Sqlite.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
+with open('wad2024.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
      cursor.executescript(f.read())
 
-st.write(cursor.execute("SELECT * FROM Artist LIMIT 10;"))
+st.write(cursor.execute("SELECT * FROM General LIMIT 10;"))
 
-db = SQLDatabase.from_uri("sqlite:///Chinook.db")
-db.run("SELECT * FROM Artist LIMIT 10;")
+db = SQLDatabase.from_uri("sqlite:///wad2024.db")
+db.run("SELECT * FROM General LIMIT 10;")
 
 class State(TypedDict):
   question: str
@@ -111,7 +111,7 @@ graph = graph_builder.compile(checkpointer=memory, interrupt_before=["execute_qu
 config = {"configurable": {"thread_id": "1"}}
 # display(Image(graph.get_graph().draw_mermaid_png()))
 
-prompt = st.text_area("Please enter what you want to know about music artists.")
+prompt = st.text_area("Please enter what you want to know about info in the WAD.")
 
 if st.button("Submit to AI", type="primary"):
      for step in graph.stream(
