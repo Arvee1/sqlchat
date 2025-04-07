@@ -14,19 +14,6 @@ from langgraph.checkpoint.memory import MemorySaver
 from IPython.display import Image, display 
 from langchain_core.messages import HumanMessage
 
-st.markdown(
-    """
-    <style>
-    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
-    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
-    .viewerBadge_text__1JaDK {
-        display: none;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Set API keys from session state
 openai_api_key = st.secrets["api_key"]
 llm = init_chat_model("gpt-4o-mini", model_provider="openai", openai_api_key=openai_api_key)
