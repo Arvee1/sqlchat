@@ -21,19 +21,7 @@ llm = init_chat_model("gpt-4o-mini", model_provider="openai", openai_api_key=ope
 # so that we can continue the run after review.
 config = {"configurable": {"thread_id": "1"}}
 
-#db = sql.connect('wad2024.db')
-#cursor = db.cursor() #cursor object
-#with open('wad2024.sql', 'r') as f: #Not sure if the 'r' is necessary, but recommended.
-#     cursor.executescript(f.read())
-
-# st.write(cursor.execute("SELECT * FROM General LIMIT 10;"))
-
 db = SQLDatabase.from_uri("sqlite:///wad2024.db")
-st.write(db.run("SELECT * FROM General LIMIT 10;"))
-
-# print(db.dialect)
-# print(db.get_usable_table_names())
-# db.run("SELECT * FROM Artist LIMIT 10;")
 
 class State(TypedDict):
   question: str
@@ -46,24 +34,21 @@ llm = init_chat_model("gpt-4o-mini", model_provider="openai", openai_api_key=ope
 query_prompt_template = hub.pull("langchain-ai/sql-query-system-prompt")
 prompt_template = hub.pull("langchain-ai/sql-agent-system-prompt")
 assert len(prompt_template.messages) == 1
-# prompt_template.messages[0].pretty_print()
 system_message = prompt_template.format(dialect="SQLite", top_k=5)
 
 assert len(query_prompt_template.messages) == 1
-# query_prompt_template.messages[0].pretty_print()
 
 toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 tools = toolkit.get_tools()
-# print(tools)
 
 agent_executor = create_react_agent(llm, tools, prompt=system_message)
 
-# question = "Which country's customers spent the most?"
-# question = "Describe the playlisttrack table"
+st.title("👨‍💻 Wazzup!!!! What do you want to know about Australian Workplace Agreements?")
+st.write("The Workplace Agreements Database represents all workplace agreements in Ausralia.")
+st.write("The data in this instance is from the 2024 Full WAD Dataset.")
 prompt = st.text_area("Please enter what you want to know about info in the WAD.")
 
 if st.button("Submit to AI", type="primary"):
-    # user_input = input("User: ")
     # Stream the response and display each step
     result_container = st.empty()  # Create a placeholder for the result
   
@@ -71,8 +56,6 @@ if st.button("Submit to AI", type="primary"):
         {"messages": [{"role": "user", "content": prompt}]},
         stream_mode="values",
     ):
-        # step["messages"][-1].pretty_print()
-        # Access the message content directly from the object
         message = step["messages"][-1]
         content = getattr(message, 'content', 'No content available')
         
