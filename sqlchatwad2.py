@@ -60,11 +60,12 @@ agent_executor = create_react_agent(llm, tools, prompt=system_message)
 
 # question = "Which country's customers spent the most?"
 # question = "Describe the playlisttrack table"
+prompt = st.text_area("Please enter what you want to know about info in the WAD.")
 
-while True:
-    user_input = input("User: ")
+if st.button("Submit to AI", type="primary"):
+    # user_input = input("User: ")
     for step in agent_executor.stream(
-        {"messages": [{"role": "user", "content": user_input}]},
+        {"messages": [{"role": "user", "content": prompt}]},
         stream_mode="values",
     ):
         step["messages"][-1].pretty_print()
