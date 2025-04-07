@@ -14,14 +14,14 @@ from langgraph.checkpoint.memory import MemorySaver
 from IPython.display import Image, display 
 from langchain_core.messages import HumanMessage
 
-# Inject CSS to hide the top right icon bar
-hide_github_icon = """
-            <style>
-            /* Hide the GitHub icon */
-            .viewerBadge_link__1S137 {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_github_icon, unsafe_allow_html=True)
+# CSS to hide the top right icons
+hide_default_icons = """
+    <style>
+    [data-testid="stDecoration"] {display: none;}
+    footer {visibility: hidden;}
+    </style>
+    """
+st.markdown(hide_default_icons, unsafe_allow_html=True)
 
 # Set API keys from session state
 openai_api_key = st.secrets["api_key"]
