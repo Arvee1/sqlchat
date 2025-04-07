@@ -72,5 +72,9 @@ if st.button("Submit to AI", type="primary"):
         stream_mode="values",
     ):
         # step["messages"][-1].pretty_print()
-        # Display each step's result on the app
-        result_container.write(step["messages"][-1].get('content', ''))
+        # Access the message content directly from the object
+        message = step["messages"][-1]
+        content = getattr(message, 'content', 'No content available')
+        
+        # Display each step's content on the app
+        result_container.write(content)
