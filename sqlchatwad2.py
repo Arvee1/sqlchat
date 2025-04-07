@@ -29,7 +29,7 @@ config = {"configurable": {"thread_id": "1"}}
 # st.write(cursor.execute("SELECT * FROM General LIMIT 10;"))
 
 db = SQLDatabase.from_uri("sqlite:///wad2024.db")
-db.run("SELECT * FROM General LIMIT 10;")
+st.write(db.run("SELECT * FROM General LIMIT 10;"))
 
 # print(db.dialect)
 # print(db.get_usable_table_names())
