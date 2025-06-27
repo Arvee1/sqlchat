@@ -36,7 +36,7 @@ prompt_template = hub.pull("langchain-ai/sql-agent-system-prompt")
 assert len(prompt_template.messages) == 1
 system_message = prompt_template.format(dialect="SQLite", top_k=5)
 
-assert len(query_prompt_template.messages) == 1
+# assert len(query_prompt_template.messages) == 1
 
 toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 tools = toolkit.get_tools()
