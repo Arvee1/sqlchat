@@ -21,7 +21,7 @@ llm = init_chat_model("gpt-4o-mini", model_provider="openai", openai_api_key=ope
 # so that we can continue the run after review.
 config = {"configurable": {"thread_id": "1"}}
 
-db = SQLDatabase.from_uri("sqlite:///wad2024.db")
+db = SQLDatabase.from_uri("sqlite:///my_aec.db")
 
 class State(TypedDict):
   question: str
@@ -43,13 +43,13 @@ tools = toolkit.get_tools()
 
 agent_executor = create_react_agent(llm, tools, prompt=system_message)
 
-st.title("👨‍💻 Wazzup!!!! What do you want to know about Australian Workplace Agreements?")
-st.write("The Workplace Agreements Database represents all workplace agreements in Australia. The data in this instance is from the 2024 Full WAD Dataset.")
+st.title("👨‍💻 Wazzup!!!! What do you want to know about Annual Returns collected by the AEC?")
+st.write("This is a test on annual returns Dataset.")
 
 # Display a special note at the beginning of your app
 st.warning("This app is experimental and data should not be treated as correct.")
 
-prompt = st.text_area("Please enter what you want to know about info in the WAD.")
+prompt = st.text_area("Please enter what you want to know about info on Annual Returns.")
 
 if st.button("Submit to AI", type="primary"):
     # Stream the response and display each step
