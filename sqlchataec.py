@@ -14,8 +14,8 @@ from langgraph.checkpoint.memory import MemorySaver
 from IPython.display import Image, display 
 from langchain_core.messages import HumanMessage
 
-# Set API keys from session state
-openai_api_key = st.secrets["api_key"]
+# Set API keys from session state 
+openai_api_key = st.secrets["api_key"] 
 llm = init_chat_model("gpt-4o-mini", model_provider="openai", openai_api_key=openai_api_key)
 # Now that we're using persistence, we need to specify a thread ID
 # so that we can continue the run after review.
