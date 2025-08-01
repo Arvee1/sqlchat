@@ -376,7 +376,7 @@ def main():
         return
     
     # Main interface
-    st.title("🏛️ AEC Annual Returns Query Tool")
+    st.title("🏛️ Wazzup!!!! This is AEC Annual Returns Query Tool")
     st.markdown("### 🔍 Ask questions about Annual Returns collected by the AEC")
     
     # Enhanced warning with more information
