@@ -15,8 +15,8 @@ import streamlit as st
 import sys
 
 # sqlite3 workaround
-# __import__('pysqlite3')
-# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+__import__('pysqlite3')
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import requests
 import openai
