@@ -5,3 +5,6 @@ langgraph
 langchain-openai
 IPython
 replicate
+pysqlite3-binary
+sentence_transformers
+chromadb
