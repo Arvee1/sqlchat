@@ -613,7 +613,7 @@ def main():
         
         donor_name = st.text_input(
             "Enter donor name (individual or organization):",
-            placeholder="e.g., Gina Rinehart, Commonwealth Bank, Wesfarmers"
+            placeholder="e.g., DJ Ryan, DJ Arvee."
         )
         
         if st.button("🔍 Analyze Donor", type="primary", disabled=not donor_name.strip()):
