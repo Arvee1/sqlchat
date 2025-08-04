@@ -609,7 +609,7 @@ def main():
     
     if analysis_type == "Individual Donor Analysis":
         st.markdown("### 👤 Individual Donor Compliance Analysis")
-        st.markdown("Analyze a specific donor across news coverage, legal requirements, and official records.")
+        st.markdown("Analyze a specific donor across news coverage, legal requirements, and test records.")
         
         donor_name = st.text_input(
             "Enter donor name (individual or organization):",
@@ -628,7 +628,7 @@ def main():
                 tab1, tab2, tab3, tab4 = st.tabs([
                     "📰 News Coverage", 
                     "📋 Legal Requirements", 
-                    "💾 Official Records", 
+                    "💾 Test Records", 
                     "🔬 Cross-Analysis"
                 ])
                 
