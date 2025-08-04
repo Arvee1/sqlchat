@@ -4,3 +4,4 @@ langchain_community
 langgraph
 langchain-openai
 IPython
+replicate
