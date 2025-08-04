@@ -473,7 +473,7 @@ class IntegratedDonationAnalyzer:
     
     def render_authentication(self):
         """Render user authentication."""
-        st.title("🏛️ Australian Political Donation Analysis System")
+        st.title("🏛️ Wazzup!!! This is a test Australian Political Donation Analysis System")
         st.markdown("### Integrated Analysis of Political Donations, Legislation & Declared Data")
         
         with st.form("auth_form"):
@@ -493,7 +493,7 @@ class IntegratedDonationAnalyzer:
     
     def render_main_interface(self):
         """Render main tabbed interface."""
-        st.title("🏛️ Political Donation Analysis System")
+        st.title("🏛️ Wazzup!!! This is a test Australian Political Donation Analysis System")
         st.markdown(f"Welcome, **{st.session_state.username}**!")
         
         # Create tabs for different analysis types
@@ -596,7 +596,7 @@ class IntegratedDonationAnalyzer:
     def render_database_tab(self):
         """Render database search interface."""
         st.header("💾 AEC Declared Donations Database")
-        st.markdown("Query the official AEC database of declared political donations.")
+        st.markdown("Query the test database of declared political donations.")
         
         # Show database info
         db_info = self.database_search.get_database_info()
