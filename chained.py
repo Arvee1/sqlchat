@@ -42,7 +42,7 @@ except ImportError:
 
 import chromadb
 from chromadb.utils import embedding_functions
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # LangChain SQL agent imports
 from langchain import hub
