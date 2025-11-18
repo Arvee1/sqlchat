@@ -147,8 +147,56 @@ if st.button("Submit to AI", type="primary", disabled=not prompt.strip()):
                     steps_container = st.empty()
                     all_steps = []
                     
-                    # Stream the response
+                    # Stream the response - FIXED INDENTATION HERE
                     for step in agent_executor.stream(
                         {"messages": [{"role": "user", "content": prompt}]},
                         stream_mode="values",
                     ):
+                        message = step["messages"][-1]
+                        content = getattr(message, 'content', 'No content available')
+                        
+                        # Collect steps
+                        all_steps.append(content)
+                        
+                        # Display intermediate steps
+                        steps_container.text("\n\n".join(all_steps))
+                
+                # Display final answer in main container
+                if all_steps:
+                    final_answer = all_steps[-1]
+                    with answer_container:
+                        st.markdown("### 📊 Answer:")
+                        st.markdown(final_answer)
+                        
+                        # Check if the answer seems to contain structured data
+                        if "|" in final_answer or "\n" in final_answer:
+                            st.info("💡 Tip: The answer above may contain tabular data. Consider copying it to a spreadsheet for better viewing.")
+                else:
+                    st.warning("No response received from the AI.")
+                    
+            except Exception as e:
+                st.error(f"❌ An error occurred: {str(e)}")
+                logger.error(f"Query execution error: {e}", exc_info=True)
+                
+                with st.expander("🔧 Troubleshooting"):
+                    st.markdown("""
+                    **Common Issues:**
+                    1. **Database Error**: Check if the database file exists and is accessible
+                    2. **Query Too Complex**: Try simplifying your question
+                    3. **Table/Column Not Found**: Check the available tables above
+                    4. **API Key Issue**: Ensure your OpenAI API key is valid
+                    """)
+    else:
+        st.warning("Please enter a question before submitting.")
+
+# Footer with helpful info
+st.markdown("---")
+st.markdown("""
+<div style='text-align: center; color: #666;'>
+    <small>
+    💾 Connected to AEC Annual Returns Database | 
+    Powered by GPT-4o-mini & LangChain | 
+    ⚠️ Experimental - Verify all results
+    </small>
+</div>
+""", unsafe_allow_html=True)
