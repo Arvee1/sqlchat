@@ -2,6 +2,7 @@ streamlit
 langchain
 langchain-text-splitters
 langchain_community
+langchainhub
 langgraph
 langchain-openai
 IPython
