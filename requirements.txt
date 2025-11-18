@@ -1,6 +1,6 @@
 streamlit
 langchain
-langchain_text_splitters
+langchain_text_splitter
 langchain_community
 langgraph
 langchain-openai
