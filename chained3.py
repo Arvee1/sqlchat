@@ -4,7 +4,7 @@ Integrated Australian Political Donation Analysis System
 
 Combines three analysis tools:
 1. Web Search - Find articles about political donors
-2. Legislation Search - Query reporting requirements and regulations 
+2. Legislation Search - Query reporting requirements and regulations
 3. Database Search - Query declared donations from AEC database
 
 This integrated system allows cross-referencing and comprehensive analysis
@@ -447,9 +447,15 @@ class DatabaseSearchComponent:
                 toolkit = SQLDatabaseToolkit(db=self.db, llm=llm)
                 tools = toolkit.get_tools()
                 
-                # Define SQL agent prompt directly (no hub.pull needed)
-                table_names = self.db.get_table_names()
-                system_message = f"""You are an agent designed to interact with a SQL database.
+                # Get table names (using the non-deprecated method)
+                try:
+                    table_names = self.db.get_usable_table_names()
+                except AttributeError:
+                    # Fallback for older versions
+                    table_names = self.db.get_table_names()
+                
+                # Define SQL agent system prompt
+                sql_system_prompt = f"""You are an agent designed to interact with a SQL database.
 Given an input question, create a syntactically correct SQLite query to run, then look at the results of the query and return the answer.
 Unless the user specifies a specific number of examples they wish to obtain, always limit your query to at most 5 results.
 You can order the results by a relevant column to return the most interesting examples in the database.
@@ -466,10 +472,11 @@ Here are the available tables: {', '.join(table_names)}
 
 The SQL dialect is: SQLite"""
                 
+                # Create the agent with correct parameters for newer LangGraph
                 self.agent_executor = create_react_agent(
-                    llm, 
-                    tools, 
-                    state_modifier=system_message
+                    model=llm,
+                    tools=tools,
+                    state_modifier=sql_system_prompt
                 )
                 
                 logger.info("SQL agent initialized successfully")
@@ -483,7 +490,12 @@ The SQL dialect is: SQLite"""
             return {"error": "Database not available"}
         
         try:
-            tables = self.db.get_table_names()
+            # Use non-deprecated method
+            try:
+                tables = self.db.get_usable_table_names()
+            except AttributeError:
+                tables = self.db.get_table_names()
+                
             return {
                 "tables": tables,
                 "total_tables": len(tables),
@@ -500,6 +512,8 @@ The SQL dialect is: SQLite"""
         
         try:
             logger.info(f"Querying database: {query[:100]}")
+            
+            # Invoke the agent with the correct format
             result = self.agent_executor.invoke(
                 {"messages": [HumanMessage(content=query)]}
             )
