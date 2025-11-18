@@ -454,8 +454,8 @@ class DatabaseSearchComponent:
                     # Fallback for older versions
                     table_names = self.db.get_table_names()
                 
-                # Define SQL agent system prompt
-                sql_system_prompt = f"""You are an agent designed to interact with a SQL database.
+                # Define SQL agent system message
+                sql_system_message = f"""You are an agent designed to interact with a SQL database.
 Given an input question, create a syntactically correct SQLite query to run, then look at the results of the query and return the answer.
 Unless the user specifies a specific number of examples they wish to obtain, always limit your query to at most 5 results.
 You can order the results by a relevant column to return the most interesting examples in the database.
@@ -472,14 +472,31 @@ Here are the available tables: {', '.join(table_names)}
 
 The SQL dialect is: SQLite"""
                 
-                # Create the agent with correct parameters for newer LangGraph
-                self.agent_executor = create_react_agent(
-                    model=llm,
-                    tools=tools,
-                    state_modifier=sql_system_prompt
-                )
-                
-                logger.info("SQL agent initialized successfully")
+                # Create the agent - try different parameter names based on version
+                try:
+                    # Newer LangGraph versions use 'messages_modifier'
+                    self.agent_executor = create_react_agent(
+                        model=llm,
+                        tools=tools,
+                        messages_modifier=sql_system_message
+                    )
+                    logger.info("SQL agent initialized successfully with messages_modifier")
+                except TypeError:
+                    try:
+                        # Some versions might use 'state_modifier'
+                        self.agent_executor = create_react_agent(
+                            model=llm,
+                            tools=tools,
+                            state_modifier=sql_system_message
+                        )
+                        logger.info("SQL agent initialized successfully with state_modifier")
+                    except TypeError:
+                        # Fallback: create without system message modifier
+                        self.agent_executor = create_react_agent(
+                            model=llm,
+                            tools=tools
+                        )
+                        logger.warning("SQL agent initialized without system message (parameter not supported in this version)")
                 
         except Exception as e:
             logger.error(f"Database initialization error: {e}", exc_info=True)
@@ -513,9 +530,16 @@ The SQL dialect is: SQLite"""
         try:
             logger.info(f"Querying database: {query[:100]}")
             
+            # Add SQL context to the query
+            enhanced_query = f"""Using the AEC political donations database, please answer this question: {query}
+
+Available tables include information about donations received, donations made, party returns, third party returns, and donor returns.
+
+Please write a SQL query to answer the question, execute it, and provide a clear answer."""
+            
             # Invoke the agent with the correct format
             result = self.agent_executor.invoke(
-                {"messages": [HumanMessage(content=query)]}
+                {"messages": [HumanMessage(content=enhanced_query)]}
             )
             
             if result and "messages" in result:
@@ -979,10 +1003,17 @@ class IntegratedDonationAnalyzer:
             doc_status = "✅" if Path(self.config.DOC_FILE).exists() else "❌"
             replicate_status = "✅" if 'REPLICATE_API_TOKEN' in st.secrets else "⚠️ (using OpenAI)"
             
+            # Check if database agent is working
+            if self.database_search.agent_executor:
+                db_agent_status = "✅"
+            else:
+                db_agent_status = "❌"
+            
             st.markdown(f"""
             - **Web Search:** {web_status}
             - **AI Models:** {ai_status}
             - **AEC Database:** {db_status}
+            - **Database Agent:** {db_agent_status}
             - **Legal Documents:** {doc_status}
             - **Replicate (Legislation):** {replicate_status}
             """)
