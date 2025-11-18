@@ -37,7 +37,8 @@ from chromadb.utils import embedding_functions
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # LangChain imports for SQL
-from langchain import hub
+# from langchain import hub
+import langchainhub as hub
 from langchain_openai import ChatOpenAI
 from langchain_community.utilities import SQLDatabase
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
