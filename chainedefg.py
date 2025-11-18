@@ -693,8 +693,8 @@ def main():
         layout="wide"
     )
     
-    st.title("🔍 Political Donation Cross-Analysis System")
-    st.markdown("**Comprehensive analysis combining news coverage, legal requirements, and AEC database**")
+    st.title("🔍 Wazzup!!!Political Donation Cross-Analysis System")
+    st.markdown("**Comprehensive experimental analysis combining news coverage, legal requirements, and AEC database**")
     
     # Initialize session state
     if 'session_id' not in st.session_state:
