@@ -1,7 +1,8 @@
 import streamlit as st 
 import sqlite3 as sql
 import pandas as pd 
-from langchain import hub
+# from langchain import hub
+import langchainhub as hub
 from langchain.chat_models import init_chat_model
 from langchain_community.utilities import SQLDatabase
 from typing_extensions import TypedDict
