@@ -13,7 +13,7 @@ from langgraph.graph import START, StateGraph
 from langgraph.checkpoint.memory import MemorySaver
 from IPython.display import Image, display
 
-# Set API keys from session state or secrets
+# Set API keys from session state
 openai_api_key = st.secrets["api_key"]
 llm = init_chat_model("gpt-4o-mini", model_provider="openai", openai_api_key=openai_api_key)
 query_prompt_template = hub.pull("langchain-ai/sql-query-system-prompt")
@@ -22,7 +22,7 @@ assert len(prompt_template.messages) == 1
 system_message = prompt_template.format(dialect="SQLite", top_k=5)
 assert len(query_prompt_template.messages) == 1
 
-# The UI Part
+# The UI Part here
 st.title("👨‍💻 Wazzup!!!! What do you want to know about about music artists in the Chinook Database?")
 st.write("The Chinook database represents a digital media store, including tables for artists, albums, media tracks, invoices and customers.")
 db = sql.connect('Chinook.db')
