@@ -13,7 +13,7 @@ from langgraph.graph import START, StateGraph
 from langgraph.checkpoint.memory import MemorySaver
 from IPython.display import Image, display
 
-# Set API keys from session state
+# Set API keys from session state or secrets
 openai_api_key = st.secrets["api_key"]
 llm = init_chat_model("gpt-4o-mini", model_provider="openai", openai_api_key=openai_api_key)
 query_prompt_template = hub.pull("langchain-ai/sql-query-system-prompt")
